@@ -16,7 +16,7 @@ const ScoreBoardScreen = () => {
   const [scores, setScores] = useState<Scores[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/graphql', {
+    fetch('https://album-guess.herokuapp.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: SCORE_QUERY }),
