@@ -12,7 +12,7 @@ module.exports = {
 
             // Set your customisation for the dev server
             devServerConfig.allowedHosts = [
-                'https://itunes.apple.com'
+                'all'
             ];
             return devServerConfig;
         }
