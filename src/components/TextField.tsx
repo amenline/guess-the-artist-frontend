@@ -71,12 +71,12 @@ export const TextField = () => {
         <input
           type='text'
           name='artist'
-          className='input block w-full rounded-md border-gray-300 pl-2 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+          className='input block w-full rounded-md border-gray-300 pl-2 pr-12 focus:border-info focus:info sm:text-sm'
           onChange={handleChange}
           value={userAnswer}
         />
         <div className='absolute inset-y-0 right-0 flex items-center'>
-          <button className='btn btn-primary' type='submit'>
+          <button className='btn btn-info' type='submit'>
             Submit
           </button>
         </div>

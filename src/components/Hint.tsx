@@ -4,7 +4,7 @@ export const Hint = () => {
   const { albumArt } = useGameContext();
 
   return (
-    <div className='flex'>
+    <div className='flex my-10'>
       <div className='mr-5'>Hint:</div>
       <div className='avatar'>
         <div className='w-32 rounded'>

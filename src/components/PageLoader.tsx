@@ -9,7 +9,7 @@ export const PageLoader = () => {
         thickness={100}
         speed={100}
         color='#fff'
-        secondaryColor='#641ae6'
+        secondaryColor='#3ABFF8'
       />
     </div>
   );

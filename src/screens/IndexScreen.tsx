@@ -73,15 +73,15 @@ const IndexScreen = ({ artistList }: Props) => {
 
   return (
     <>
-      <div className='min-h-screen flex items-center justify-center dark:bg-neutral bg-gray-200 p-5'>
+      <div className='min-h-screen flex items-center justify-center dark:bg-neutral bg-gray-200 p-7'>
         <div className='max-w-5xl w-full mx-auto bg-white dark:bg-base-100 p-6 rounded-lg shadow-lg'>
-          <h1 className='w-fit mx-auto font-bold text-2xl text-primary text-center'>
+          <h1 className='w-fit mx-auto font-bold text-2xl text-info text-center mt-10'>
             Guess The Artist
           </h1>
           <main>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4 my-10'>
               <section>
-                <h2 className='text-xl font-bold'>Round {round}</h2>
+                <h2 className='text-xl font-bold mb-10'>Round {round}</h2>
                 {albums.length > 0 &&
                   albums
                     .slice(0, tries)
@@ -90,7 +90,7 @@ const IndexScreen = ({ artistList }: Props) => {
                     ))}
               </section>
               <section className='place-self-center w-fit'>
-                <h2>
+                <h2 className='my-10'>
                   For {pointsTobeAwarded} points <br />
                   Who's the artist? (enter full name)
                 </h2>
