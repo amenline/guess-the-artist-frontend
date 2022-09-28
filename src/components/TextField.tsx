@@ -46,6 +46,7 @@ export const TextField = () => {
       editStore(StoreItem.totalScore, totalScore + pointsTobeAwarded);
       editStore(StoreItem.tries, 1);
       editStore(StoreItem.hint, false);
+      editStore(StoreItem.fetchNewArtist, true);
       setUserAnswer('');
     } else {
       if (tries < 3) {
@@ -54,11 +55,14 @@ export const TextField = () => {
       } else {
         editStore(StoreItem.tries, 1);
         if (hint) {
+          editStore(StoreItem.round, 1);
+          editStore(StoreItem.albums, []);
+          editStore(StoreItem.albumArt, '');
           editStore(StoreItem.hint, false);
+          editStore(StoreItem.fetchNewArtist, true);
           editStore(StoreItem.gameOver, true);
         }
       }
-      console.log(tries);
     }
   };
 

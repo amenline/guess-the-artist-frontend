@@ -13,6 +13,7 @@ export enum StoreItem {
   pointsTobeAwarded = 'pointsTobeAwarded',
   hint = 'hint',
   gameOver = 'gameOver',
+  fetchNewArtist = 'fetchNewArtist',
   totalScore = 'totalScore',
 }
 
@@ -27,6 +28,7 @@ export interface GameContextType {
   hint: boolean;
   gameOver: boolean;
   totalScore: number;
+  fetchNewArtist: boolean;
   editStore: (
     key: StoreItem,
     payload: string | null | number | any[] | boolean

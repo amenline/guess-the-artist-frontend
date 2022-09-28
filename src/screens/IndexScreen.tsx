@@ -1,5 +1,12 @@
-import { useEffect } from 'react';
-import { Album, Hint, Modal, TextField, TotalScore } from '../components';
+import { useEffect, useState } from 'react';
+import {
+  Album,
+  Hint,
+  Loader,
+  Modal,
+  TextField,
+  TotalScore,
+} from '../components';
 import {
   Artist,
   filterResults,
@@ -15,28 +22,31 @@ interface Props {
 
 const IndexScreen = ({ artistList }: Props) => {
   const {
-    albumArt,
     albums,
     artistId,
     artistName,
     editStore,
+    fetchNewArtist,
     hint,
     pointsTobeAwarded,
     round,
-    totalScore,
     tries,
   } = useGameContext();
 
+  const [slicedAlbum, setSlicedAlbum] = useState(albums.slice(0, tries));
+
   // Set a new artist
   useEffect(() => {
-    let randomNum = getRandomNumber(0, artistList.length - 1);
-    editStore(StoreItem.artistName, artistList[randomNum].name);
-    editStore(StoreItem.artistId, artistList[randomNum].id);
-  }, [round]);
+    if (artistId === null || fetchNewArtist) {
+      let randomNum = getRandomNumber(0, artistList.length - 1);
+      editStore(StoreItem.artistName, artistList[randomNum].name);
+      editStore(StoreItem.artistId, artistList[randomNum].id);
+    }
+  }, [round, fetchNewArtist]);
 
-  // Get albums
   useEffect(() => {
-    if (artistId !== null) {
+    // Get Albums
+    if (albums.length === 0 || fetchNewArtist) {
       fetch(`/lookup?id=${artistId}&entity=album`, {
         method: 'GET',
         mode: 'no-cors',
@@ -50,26 +60,37 @@ const IndexScreen = ({ artistList }: Props) => {
           if (artistId !== null) {
             const filteredAlbums = filterResults(data.results, artistId);
             const albumNum = get3RandomNumbers(0, filteredAlbums.length - 1);
-
-            editStore(StoreItem.albums, [
+            const newAlbum = [
               filteredAlbums[albumNum[0]],
               filteredAlbums[albumNum[1]],
               filteredAlbums[albumNum[2]],
-            ]);
+            ];
+
+            editStore(StoreItem.albums, newAlbum);
 
             editStore(
               StoreItem.albumArt,
               filteredAlbums[albumNum[2]].artworkUrl60
             );
+            editStore(StoreItem.fetchNewArtist, false);
           }
         })
         .catch((error) =>
-          console.log('An error occured while fetching data', error)
+          console.log('An error occured while fetching album', error)
         );
     }
-  }, [artistId, round]);
+  }, [artistId]);
 
-  console.log(artistName);
+  useEffect(() => {
+    if (albums.length === 0) editStore(StoreItem.fetchNewArtist, true);
+  }, []);
+
+  // set sliced ablums for number of tries
+  useEffect(() => {
+    setSlicedAlbum(albums.slice(0, tries));
+  }, [albums, tries]);
+
+  console.log('*****Aritst Name*****', artistName);
 
   return (
     <>
@@ -82,12 +103,13 @@ const IndexScreen = ({ artistList }: Props) => {
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4 my-10'>
               <section>
                 <h2 className='text-xl font-bold mb-10'>Round {round}</h2>
-                {albums.length > 0 &&
-                  albums
-                    .slice(0, tries)
-                    .map((album: any, index) => (
-                      <Album name={album.collectionName} key={index} />
-                    ))}
+                {albums.length > 0 ? (
+                  slicedAlbum.map((album: any, index) => (
+                    <Album name={album.collectionName} key={index} />
+                  ))
+                ) : (
+                  <Loader />
+                )}
               </section>
               <section className='place-self-center w-fit'>
                 <h2 className='my-10'>

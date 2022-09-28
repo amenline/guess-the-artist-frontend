@@ -32,11 +32,16 @@ export const Modal = () => {
   };
 
   const resetGame = () => {
+    editStore(StoreItem.artistName, '');
+    editStore(StoreItem.artistId, null);
+    editStore(StoreItem.albumArt, '');
+    editStore(StoreItem.albums, []);
     editStore(StoreItem.tries, 1);
     editStore(StoreItem.totalScore, 0);
     editStore(StoreItem.round, 1);
     editStore(StoreItem.pointsTobeAwarded, 5);
     editStore(StoreItem.hint, false);
+    editStore(StoreItem.fetchNewArtist, true);
   };
 
   const handleSubmit = (_event: React.FormEvent<HTMLFormElement>) => {

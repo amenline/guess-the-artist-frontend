@@ -1,79 +1,115 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
-import { GameContextType } from '../utilities';
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
+import {
+  GameContextType,
+  getFromLocatStorage,
+  saveToLocatStorage,
+  StoreItem,
+} from '../utilities';
+import { gameContextDefaultValues } from './DefaultValues';
 
 type Props = {
   children: ReactNode;
 };
 
-const gameContextDefaultValues: GameContextType = {
-  artistName: '',
-  artistId: null,
-  round: 1,
-  tries: 1,
-  albums: [],
-  albumArt: '',
-  pointsTobeAwarded: 5,
-  hint: false,
-  gameOver: false,
-  totalScore: 0,
-  editStore: (key, payload) => {},
-};
-
+// Set context default value
 const GameContext = createContext<GameContextType>(gameContextDefaultValues);
 
+// Export context for use
 export const useGameContext = () => {
   return useContext(GameContext);
 };
 
 export const GameProvider = ({ children }: Props) => {
-  const [artistName, setArtistName] = useState('');
-  const [artistId, setArtistId] = useState<null | number>(null);
-  const [round, setRound] = useState(1);
-  const [tries, setTries] = useState(1);
-  const [albums, setAlbums] = useState<any[]>([]);
-  const [albumArt, setAlbumArt] = useState('');
-  const [pointsTobeAwarded, setPointsTobeAwarded] = useState(5);
-  const [hint, setHint] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
-  const [totalScore, setTotalScore] = useState(0);
+  // Setstate to values from the localstorage if exists
+  const [artistName, setArtistName] = useState(
+    getFromLocatStorage(StoreItem.artistName, '')
+  );
+  const [artistId, setArtistId] = useState<null | number>(
+    getFromLocatStorage(StoreItem.artistId, null)
+  );
+  const [round, setRound] = useState(getFromLocatStorage(StoreItem.round, 1));
+  const [tries, setTries] = useState(getFromLocatStorage(StoreItem.tries, 1));
+  const [albums, setAlbums] = useState<any[]>(
+    getFromLocatStorage(StoreItem.albums, [])
+  );
+  const [albumArt, setAlbumArt] = useState(
+    getFromLocatStorage(StoreItem.albumArt, '')
+  );
+  const [pointsTobeAwarded, setPointsTobeAwarded] = useState(
+    getFromLocatStorage(StoreItem.pointsTobeAwarded, 5)
+  );
+  const [hint, setHint] = useState(getFromLocatStorage(StoreItem.hint, false));
+  const [gameOver, setGameOver] = useState(
+    getFromLocatStorage(StoreItem.gameOver, false)
+  );
+  const [totalScore, setTotalScore] = useState(
+    getFromLocatStorage(StoreItem.totalScore, 0)
+  );
+  const [fetchNewArtist, setFetchNewArtist] = useState(
+    getFromLocatStorage(StoreItem.fetchNewArtist, false)
+  );
 
-  const editStore: GameContextType['editStore'] = (key, payload) => {
-    switch (key) {
-      case 'artistName':
-        setArtistName(payload as string);
-        break;
-      case 'artistId':
-        setArtistId(payload as number);
-        break;
-      case 'round':
-        setRound(payload as number);
-        break;
-      case 'tries':
-        setTries(payload as number);
-        break;
-      case 'albums':
-        setAlbums(payload as any[]);
-        break;
-      case 'albumArt':
-        setAlbumArt(payload as string);
-        break;
-      case 'pointsTobeAwarded':
-        setPointsTobeAwarded(payload as number);
-        break;
-      case 'hint':
-        setHint(payload as boolean);
-        break;
-      case 'gameOver':
-        setGameOver(payload as boolean);
-        break;
-      case 'totalScore':
-        setTotalScore(payload as number);
-        break;
+  // a function to edit items in the context store and localstorage
+  const editStore: GameContextType['editStore'] = useCallback(
+    (key, payload) => {
+      switch (key) {
+        case 'artistName':
+          setArtistName(payload as string);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'artistId':
+          setArtistId(payload as number);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'round':
+          setRound(payload as number);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'tries':
+          setTries(payload as number);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'albums':
+          setAlbums(payload as any[]);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'albumArt':
+          setAlbumArt(payload as string);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'pointsTobeAwarded':
+          setPointsTobeAwarded(payload as number);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'hint':
+          setHint(payload as boolean);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'gameOver':
+          setGameOver(payload as boolean);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'totalScore':
+          setTotalScore(payload as number);
+          saveToLocatStorage(key, payload);
+          break;
+        case 'fetchNewArtist':
+          setFetchNewArtist(payload as boolean);
+          saveToLocatStorage(key, payload);
+          break;
 
-      default:
-        return;
-    }
-  };
+        default:
+          return;
+      }
+    },
+    []
+  );
 
   const value = {
     artistName,
@@ -86,6 +122,7 @@ export const GameProvider = ({ children }: Props) => {
     hint,
     gameOver,
     totalScore,
+    fetchNewArtist,
     editStore,
   };
 

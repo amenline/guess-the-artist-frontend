@@ -2,18 +2,30 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PageLoader } from './components';
 import { GameProvider } from './context';
-import { Artist, artists } from './utilities';
+import {
+  Artist,
+  artists,
+  getFromLocatStorage,
+  initalizeLocalStorage,
+  StoreItem,
+} from './utilities';
 
 // screens import
 const IndexScreen = React.lazy(() => import('./screens/IndexScreen'));
 const ScoreBoardScreen = React.lazy(() => import('./screens/ScoreBoardScreen'));
 
 function App() {
-  const [artist, setArtist] = useState([{ name: '', id: 0 }]);
+  const [artistList, setArtistList] = useState<Artist[]>([{ name: '', id: 0 }]);
+
   useEffect(() => {
     const allArtists: Artist[] = artists;
-    setArtist(allArtists);
-  }, [artist]);
+    setArtistList(allArtists);
+
+    if (getFromLocatStorage(StoreItem.round, null) === null) {
+      // setup new values for local storage
+      initalizeLocalStorage();
+    }
+  }, [artistList]);
 
   return (
     <Router>
@@ -23,7 +35,7 @@ function App() {
             index
             element={
               <GameProvider>
-                <IndexScreen artistList={artists} />
+                <IndexScreen artistList={artistList} />
               </GameProvider>
             }
           />

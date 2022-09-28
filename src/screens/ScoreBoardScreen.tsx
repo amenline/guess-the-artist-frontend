@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SpinnerRoundOutlined } from 'spinners-react';
-import { ScoresTable } from '../components/ScoreTable';
+import { Loader, ScoresTable } from '../components';
 import { Scores } from '../utilities';
 
 const SCORE_QUERY = `
@@ -65,18 +64,7 @@ const ScoreBoardScreen = () => {
           </h1>
         </div>
         <div className='overflow-x-auto my-10'>
-          {isloading ? (
-            <div className='mx-auto w-fit p-16'>
-              <SpinnerRoundOutlined
-                size={50}
-                thickness={100}
-                speed={100}
-                color='#3ABFF8'
-              />
-            </div>
-          ) : (
-            <ScoresTable scores={scores} />
-          )}
+          {isloading ? <Loader /> : <ScoresTable scores={scores} />}
         </div>
       </div>
     </div>
