@@ -37,7 +37,7 @@ const IndexScreen = ({ artistList }: Props) => {
   // Get albums
   useEffect(() => {
     if (artistId !== null) {
-      fetch(`https://itunes.apple.com/lookup?id=${artistId}&entity=album`, {
+      fetch(`/lookup?id=${artistId}&entity=album`, {
         method: 'GET',
         mode: 'no-cors',
         credentials: 'same-origin',
