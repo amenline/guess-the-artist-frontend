@@ -1,10 +1,28 @@
-# Getting Started with Create React App
+# GUESS THE ARTIST
+
+This is a simply game that lets you guess an artist's full name from an album's title.\
+This repo contains the frontend code for the application and the backend codes can be found [here](https://github.com/amenline/guess-the-artist).\
+Currently, the app is deployed to Heroku, [https://guess-the-artist-game.herokuapp.com/](https://guess-the-artist-game.herokuapp.com/)
+
+## How the game works
+
+- For each round of the game, a new artist is selected randomly from a list of 20 artists
+- The user is randomly shown an album by the artist using the [iTunes API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/Searching.html#//apple_ref/doc/uid/TP40017632-CH5-SW1)
+- The user has three tries to guess right the artist's full name. On the third try, the album's artwork is displayed as a hint.
+- Points are rewarded for each right answer based on the number of tries.
+- When a user is unable to guess an artist's name after all three tries, the score is saved along with a username.
+- On a scoreboard page, all the scores can be viewed.
+
+## Running the App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `yarn install`
+Installs all the dependencies of the project defined in the [package.json](package.json) file
 
 ### `yarn start`
 
@@ -13,34 +31,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
