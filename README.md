@@ -1,6 +1,6 @@
 # GUESS THE ARTIST
 
-This is a simply game that lets you guess an artist's full name from an album's title.\
+This is a simple game that lets you guess an artist's full name from an album's title.\
 This repo contains the frontend code for the application and the backend codes can be found [here](https://github.com/amenline/guess-the-artist).\
 Currently, the app is deployed to Heroku, [https://guess-the-artist-game.herokuapp.com/](https://guess-the-artist-game.herokuapp.com/)
 
